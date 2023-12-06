@@ -12,11 +12,20 @@ export default function Home() {
   const { isLoading, isError, error, jobPosts } = useSelector(
     (state) => state.jobPosts
   );
+  const [jobPostData, setJobPostData] = useState([]); 
+  const [sortKey, setSortKey] = useState('') 
+  
+  const handleSort = (e) => {
+    if (e.target.value !== "default") {
+      setSortKey(e.target.value);
+    } 
+  };
 
   useEffect(() => {
     dispatch(readJobpost());
-    console.log(jobPosts);
-  }, [dispatch]);
+   
+ 
+  }, [dispatch, jobPosts]);
 
   //decide what to render
   let content;
@@ -36,8 +45,8 @@ export default function Home() {
     content = <Alert message="No Job Post found" />;
   }
 
-  if (!isLoading && !isError && jobPosts.length > 0) {
-    content = jobPosts.map((jobPost) => (
+  if (!isLoading && !isError && jobPosts.length > 0) { 
+    content = jobPostData.map((jobPost) => (
       <SingleJob key={jobPost.id} jobPost={jobPost} />
     ));
   }
@@ -67,11 +76,12 @@ export default function Home() {
                   id="sort"
                   name="sort"
                   autoComplete="sort"
-                  className="flex-1"
+                  className="flex-1  border-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleSort}
                 >
-                  <option>Default</option>
-                  <option>Salary (Low to High)</option>
-                  <option>Salary (High to Low)</option>
+                  <option value="default">Default</option>
+                  <option value="asc">Salary (Low to High)</option>
+                  <option value="desc">Salary (High to Low)</option>
                 </select>
               </div>
             </div>
