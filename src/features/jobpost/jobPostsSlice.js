@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { addJobPost, fetchJobPosts } from "./jobPostsAPI"
+import { addJobPost, fetchJobPosts, removeJobPost } from "./jobPostsAPI"
 
 //initial state
 const initialState = {
@@ -14,6 +14,7 @@ const initialState = {
 export const createJobpost = createAsyncThunk(
     'jobposts/createJobPost',
     async (jobData) =>{
+        console.log("CREATE slice", jobData)
         const jobPost =  await addJobPost(jobData)
         return jobPost
     }
@@ -28,10 +29,19 @@ export const readJobpost = createAsyncThunk(
     }
 )
 
+// DELETE thunk
+export const deleteJobpost = createAsyncThunk(
+    'jobposts/deleteJobpost',
+    async (id) =>{
+        console.log("delete slice", id) 
+        const jobPost =  await removeJobPost(id) 
+        return jobPost
+    }
+)
 
 
-// Slices
 
+// Slices 
 export const jobPostsSlice = createSlice({
     name: "jobPosts",
     initialState,
@@ -44,6 +54,7 @@ export const jobPostsSlice = createSlice({
             state.isLoading = true 
         })
         .addCase(createJobpost.fulfilled, (state, action) => { 
+            console.log("action.payload", action.payload)
             state.isError = false,
             state.isLoading = false,
             state.jobPosts.push(action.payload) 
@@ -52,7 +63,7 @@ export const jobPostsSlice = createSlice({
             state.isLoading = false,
             state.isError = true,
             state.error = action.error?.message,
-            state.transactions = []
+            state.jobPosts = []
         })
 
         //jobpost READ slice
@@ -69,7 +80,25 @@ export const jobPostsSlice = createSlice({
             state.isLoading = false,
             state.isError = true,
             state.error = action.error?.message,
-            state.transactions = []
+            state.jobPosts = []
+        })
+
+        //jobpost DELETE slice
+        .addCase(deleteJobpost.pending, (state) => { 
+            state.isError = false,
+            state.isLoading = true 
+        })
+        .addCase(deleteJobpost.fulfilled, (state, action) => { 
+            console.log("action",action.meta.arg)
+            state.isError = false,
+            state.isLoading = false,
+            state.jobPosts = state.jobPosts.filter((item)=> item.id !==action.meta.arg) 
+        })
+        .addCase(deleteJobpost.rejected, (state, action) => { 
+            state.isLoading = false,
+            state.isError = true,
+            state.error = action.error?.message,
+            state.jobPosts = []
         })
          
     }

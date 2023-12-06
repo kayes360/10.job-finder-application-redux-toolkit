@@ -8,34 +8,39 @@ import SingleJobSkeleton from "../components/SingleJobSkeleton";
 import Alert from "../components/Alert";
 
 export default function Home() {
-    const dispatch = useDispatch()
-    const {isLoading,isError, error, jobPosts} =useSelector(state=> state.jobPosts)
+  const dispatch = useDispatch();
+  const { isLoading, isError, error, jobPosts } = useSelector(
+    (state) => state.jobPosts
+  );
 
-    useEffect(() => {
-      dispatch(readJobpost())  
-      console.log(jobPosts)
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(readJobpost());
+    console.log(jobPosts);
+  }, [dispatch]);
 
-    //decide what to render
-    let content;
+  //decide what to render
+  let content;
 
-    if (isLoading) { 
-        content = Array.from({ length:5 }).map((_, index) => ( <SingleJobSkeleton key={index}/>))
-        // content =  <SingleJobSkeleton />
-    }
+  if (isLoading) {
+    content = Array.from({ length: 5 }).map((_, index) => (
+      <SingleJobSkeleton key={index} />
+    ));
+    // content =  <SingleJobSkeleton />
+  }
 
-    if (!isLoading && isError) {
-        content = <Alert message={error}/>
-    }
+  if (!isLoading && isError) {
+    content = <Alert message={error} />;
+  }
 
-    if (!isLoading && !isError && jobPosts.length === 0) {
-        content = <Alert message="No Job Post found"/>
-    }
+  if (!isLoading && !isError && jobPosts.length === 0) {
+    content = <Alert message="No Job Post found" />;
+  }
 
-    if (!isLoading && !isError && jobPosts.length > 0) {
-        content = jobPosts.map((jobPost)=> <SingleJob key={jobPost.id} jobPost={jobPost}/>)
-    }
-    
+  if (!isLoading && !isError && jobPosts.length > 0) {
+    content = jobPosts.map((jobPost) => (
+      <SingleJob key={jobPost.id} jobPost={jobPost} />
+    ));
+  }
 
   return (
     <div>
@@ -71,11 +76,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="jobs-list"> 
-              {
-                content
-              } 
-            </div>
+            <div className="jobs-list">{content}</div>
           </main>
         </div>
       </div>

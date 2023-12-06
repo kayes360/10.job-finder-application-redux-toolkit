@@ -1,20 +1,6 @@
 {
   "jobposts": [
     {
-      "title": "DevOps Engineer",
-      "type": "Internship",
-      "salary": "25002",
-      "deadline": "2024-12-31",
-      "id": 2
-    },
-    {
-      "title": "QA Engineer",
-      "type": "Full Time",
-      "salary": "15000",
-      "deadline": "2023-12-31",
-      "id": 3
-    },
-    {
       "title": "Product Manager",
       "type": "Remote",
       "salary": "18000",
@@ -41,7 +27,13 @@
       "salary": "18000",
       "deadline": "2023-12-31",
       "id": 7
+    },
+    {
+      "title": "Software Developer",
+      "type": "Remote",
+      "salary": "16",
+      "deadline": "2009-07-08",
+      "id": 8
     }
-     
   ]
 }

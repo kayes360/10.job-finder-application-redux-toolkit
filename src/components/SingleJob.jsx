@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteJobpost } from "../features/jobpost/jobPostsSlice";
 
 export default function SingleJob({ jobPost }) {
-  const { title, type, salary, deadline } = jobPost;
+  const { id, title, type, salary, deadline } = jobPost;
   const [typeColor, setTypeColor] = useState("");
   const checkType = (type) => {
     switch (type) {
@@ -22,9 +24,15 @@ export default function SingleJob({ jobPost }) {
         break;
     }
   };
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    console.log("handleDelete", id);
+    dispatch(deleteJobpost(id));
+  };
 
   useEffect(() => {
-    checkType(type)
+    checkType(type);
   }, []);
 
   return (
@@ -52,14 +60,24 @@ export default function SingleJob({ jobPost }) {
         </div>
         <div className="mt-5 flex lg:mt-0 lg:ml-4">
           <span className="hidden sm:block">
-            <Link to="/editjob" type="button" className="edit btn btn-primary">
+            <Link
+              to="/editjob"
+              type="button"
+              className="edit btn bg-blue-400 hover:bg-blue-500"
+            >
               <i className="fa-solid fa-pen text-gray-300 -ml-1 mr-2"></i>
               Edit
             </Link>
           </span>
 
           <span className="sm:ml-3">
-            <button type="button" className="delete btn btn-danger ">
+            <button
+              type="button"
+              className="delete btn bg-red-400 hover:bg-red-500"
+              onClick={() => {
+                handleDelete(id);
+              }}
+            >
               <i className="fa-solid fa-trash text-gray-300 -ml-1 mr-2"></i>
               Delete
             </button>
