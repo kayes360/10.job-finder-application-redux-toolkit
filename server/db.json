@@ -2,8 +2,8 @@
   "jobposts": [
     {
       "title": "Product Manager",
-      "type": "Remote",
-      "salary": "18000",
+      "type": "Full Time",
+      "salary": "28000",
       "deadline": "2023-12-31",
       "id": 4
     },
@@ -27,6 +27,69 @@
       "salary": "16",
       "deadline": "2009-07-08",
       "id": 8
+    },
+    {
+      "title": "Full Stack Developer",
+      "type": "Internship",
+      "salary": "68",
+      "deadline": "1978-02-28",
+      "id": 9
+    },
+    {
+      "title": "Product Manager",
+      "type": "Remote",
+      "salary": "2",
+      "deadline": "1973-10-18",
+      "id": 10
+    },
+    {
+      "title": "Frontend Engineer",
+      "type": "Full Time",
+      "salary": "32",
+      "deadline": "1993-08-08",
+      "id": 11
+    },
+    {
+      "title": "QA Engineer",
+      "type": "Internship",
+      "salary": "3",
+      "deadline": "1983-11-11",
+      "id": 12
+    },
+    {
+      "title": "Product Manager",
+      "type": "Internship",
+      "salary": "71",
+      "deadline": "2006-03-27",
+      "id": 13
+    },
+    {
+      "title": "Junior Executive",
+      "type": "Remote",
+      "salary": "56",
+      "deadline": "1973-09-11",
+      "id": 14
+    },
+    {
+      "title": "Product Manager",
+      "type": "Remote",
+      "salary": "6",
+      "deadline": "1974-11-16",
+      "id": 15
+    },
+    {
+      "title": "Software Engineer",
+      "type": "Remote",
+      "salary": "58",
+      "deadline": "1975-12-03",
+      "id": 16
+    },
+    {
+      "title": "Social Media Manager",
+      "type": "Internship",
+      "salary": "48",
+      "deadline": "1974-06-12",
+      "id": 17
     }
   ]
 }
