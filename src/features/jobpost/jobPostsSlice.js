@@ -1,20 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { addJobPost, fetchJobPosts, removeJobPost } from "./jobPostsAPI"
+import { addJobPost,  fetchJobPostById,  fetchJobPosts, modifyJobPostById, removeJobPost } from "./jobPostsAPI"
 
 //initial state
 const initialState = {
     isLoading: false,
     isError: false,
     error: '',
-    jobPosts: [],
-    editedJobPost: {}
+    jobPosts: [], 
+    editedJobPost: [],
+    singleJobPost: []
 }
 
 // CREATE thunk
 export const createJobpost = createAsyncThunk(
     'jobposts/createJobPost',
-    async (jobData) =>{
-        console.log("CREATE slice", jobData)
+    async (jobData) =>{ 
         const jobPost =  await addJobPost(jobData)
         return jobPost
     }
@@ -29,17 +29,34 @@ export const readJobpost = createAsyncThunk(
     }
 )
 
+// READ thunk
+export const readJobpostById = createAsyncThunk(
+    'jobpost/readJobpostById',
+    async (id) =>{ 
+        const jobPost =  await fetchJobPostById(id) 
+        return jobPost
+    }
+)
+// UPDATE thunk
+export const updateJobpostById = createAsyncThunk(
+    'jobpost/updateJobpostById',
+    async ({id, editFormData}) =>{ 
+         
+
+        const updatedJobPost =  await modifyJobPostById(id, editFormData) 
+        return updatedJobPost
+    }
+)
+ 
+
 // DELETE thunk
 export const deleteJobpost = createAsyncThunk(
     'jobposts/deleteJobpost',
-    async (id) =>{
-        console.log("delete slice", id) 
+    async (id) =>{ 
         const jobPost =  await removeJobPost(id) 
         return jobPost
     }
 )
-
-
 
 // Slices 
 export const jobPostsSlice = createSlice({
@@ -54,7 +71,7 @@ export const jobPostsSlice = createSlice({
             state.isLoading = true 
         })
         .addCase(createJobpost.fulfilled, (state, action) => { 
-            console.log("action.payload", action.payload)
+             
             state.isError = false,
             state.isLoading = false,
             state.jobPosts.push(action.payload) 
@@ -82,6 +99,43 @@ export const jobPostsSlice = createSlice({
             state.error = action.error?.message,
             state.jobPosts = []
         })
+        
+
+        //jobpost READ By ID slice
+        .addCase(readJobpostById.pending, (state) => { 
+            state.isError = false,
+            state.isLoading = true 
+        })
+        .addCase(readJobpostById.fulfilled, (state, action) => { 
+            state.isError = false,
+            state.isLoading = false,
+            state.singleJobPost = action.payload
+        })
+        .addCase(readJobpostById.rejected, (state, action) => { 
+            state.isLoading = false,
+            state.isError = true,
+            state.error = action.error?.message,
+            state.singleJobPost = []
+        })
+
+        //jobpost UPDATE slice
+        .addCase(updateJobpostById.pending, (state) => { 
+            state.isError = false,
+            state.isLoading = true 
+        })
+        .addCase(updateJobpostById.fulfilled, (state, action) => { 
+            state.isError = false;
+            state.isLoading = false;
+            const indexToUpdate = state.jobPosts.findIndex((item)=> item.id === action.payload.id) 
+            state.jobPosts[indexToUpdate] = action.payload 
+        })
+        .addCase(updateJobpostById.rejected, (state, action) => { 
+            state.isLoading = false,
+            state.isError = true,
+            state.error = action.error?.message;
+        })
+
+         
 
         //jobpost DELETE slice
         .addCase(deleteJobpost.pending, (state) => { 
@@ -89,7 +143,7 @@ export const jobPostsSlice = createSlice({
             state.isLoading = true 
         })
         .addCase(deleteJobpost.fulfilled, (state, action) => { 
-            console.log("action",action.meta.arg)
+            
             state.isError = false,
             state.isLoading = false,
             state.jobPosts = state.jobPosts.filter((item)=> item.id !==action.meta.arg) 

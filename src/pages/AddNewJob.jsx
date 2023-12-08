@@ -10,8 +10,7 @@ export default function AddNewJob() {
   const [salary, setSalary] = useState("");
   const [deadline, setDeadLine] = useState("");
   const [formData, setFormData] = useState(null);
-  const dispatch = useDispatch();
-  // title, type, salary, deadline 
+  const dispatch = useDispatch(); 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -28,7 +27,7 @@ export default function AddNewJob() {
   useEffect(() => {
     console.log("submited data", formData);
   }, [formData]);
-
+{/* <EditForm singleJobPost={singleJobPost} /> */}
   return (
     <div>
       <Navbar />

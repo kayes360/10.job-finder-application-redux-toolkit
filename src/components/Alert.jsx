@@ -8,7 +8,4 @@ export default function Alert({ message }) {
   );
 }
 
-
-{/* <div class="bg-blue-600 text-sm text-white rounded-lg p-4 dark:bg-blue-500" role="alert">
-  <span class="font-bold">Info</span> alert! You should check in on some of those fields below.
-</div> */}
+ 

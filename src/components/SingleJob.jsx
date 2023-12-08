@@ -61,7 +61,7 @@ export default function SingleJob({ jobPost }) {
         <div className="mt-5 flex lg:mt-0 lg:ml-4">
           <span className="hidden sm:block">
             <Link
-              to="/editjob"
+              to={`/editjob/${id}`}
               type="button"
               className="edit btn bg-blue-400 hover:bg-blue-500"
             >
